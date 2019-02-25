@@ -1,0 +1,45 @@
+/* Construction Binary Tree From Inorder and Preorder Traversal
+
+struct TreeNode                                            ------------------   Structure of TreeNode
+{
+int val;
+TreeNode *left;
+TreeNode *right;
+TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+}
+
+
+TreeNode * createBT(vector<int> preorder,vector<int> inorder)
+{
+int length=preorder.size();
+if(length<0)
+return NULL;
+int start=0,end=length-1,prestart=0;
+return tree(preorder,inorder,start,end,prestart)                  
+}
+
+
+TreeNode * tree(vector<int> preorder,vector<int> inorder,int start,int end,int &prestart)          -------------- Create tree node and return root pointer.
+{
+if(start>end)
+return NULL;
+int value=preorder[prestart];
+prestart++;
+
+int m=searchindex(inorder,start,end,value);                     
+
+TreeNode *t=(TreeNode*)malloc(sizeof(TreeNode*));
+t->val=value;
+t->left=tree(preorder,inorder,start,m-1,prestart);
+t->right=tree(preorder,inorder,m+1,end,prestart);
+
+return t;
+}
+
+int searchindex(vector<int> inorder,int start,int end,int value)              -----------------search index of value in Inorder Traversal
+{
+for(i=start;i<=end;i++)
+{
+if(inorder[i]==value)
+return i;
+}}
